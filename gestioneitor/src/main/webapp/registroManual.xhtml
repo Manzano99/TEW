@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/template.xhtml">
+
+    <ui:define name="subtitle">Registro Manual</ui:define>
+
+    <ui:define name="cuerpo">
+        <h:form>
+            <p:panel header="Registro Manual">
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel value="Nombre de usuario:" for="usuario" />
+                    <p:inputText id="usuario" value="#{beanRegistro.nombreUsuario}" required="true" />
+
+                    <p:outputLabel value="Contraseña:" for="password" />
+                    <p:password id="password" value="#{beanRegistro.password}" required="true" />
+
+                    <p:outputLabel value="Confirmar contraseña:" for="confirmar" />
+                    <p:password id="confirmar" value="#{beanRegistro.confirmarPassword}" required="true" />
+
+                </p:panelGrid>
+
+                <p:commandButton value="Registrar" action="#{beanRegistro.registrarManual}" ajax="false" />
+
+                <h:outputText value="#{beanRegistro.mensaje}"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

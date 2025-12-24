@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="subtitle">#{msgs.titulo_formulario}</ui:define>
+
+    <ui:define name="cuerpo">
+        <h:form>
+            <p:panelGrid columns="3" id="grid">
+                <p:outputLabel value="#{msgs.label_nombre}" for="nombre" />
+                <p:inputText value="#{beanAlumnos.alumno.nombre}" required="true" validatorMessage="#{msgs.formulario_validator_nombre}" requiredMessage="#{msgs.formulario_required_nombre}" id="nombre">
+                    <f:validateLength maximum="20" />
+                </p:inputText>
+                <p:message for="nombre"/>
+                <p:outputLabel value="#{msgs.label_apellido}" for="apellidos" />
+                <p:inputText value="#{beanAlumnos.alumno.apellidos}" required="true" validatorMessage="#{msgs.formulario_validator_apellidos}" requiredMessage="#{msgs.formulario_required_apellidos}" id="apellidos">
+                    <f:validateLength maximum="40" />
+                </p:inputText>
+                <p:message for="apellidos" />
+                <p:outputLabel value="#{msgs.label_idUser}" for="idUser" />
+                <p:inputText value="#{beanAlumnos.alumno.idUser}" required="true" validatorMessage="#{msgs.formulario_validator_idUser}" requiredMessage="#{msgs.formulario_required_idUser}" id="idUser">
+                    <f:validateLength minimum="5" maximum="8" />
+                </p:inputText>
+                <p:message for="idUser" />
+                <p:outputLabel value="#{msgs.label_email}" for="email" />
+                <p:inputText value="#{beanAlumnos.alumno.email}" required="true" validatorMessage="#{msgs.formulario_validator_email}" requiredMessage="#{msgs.formulario_required_email}" id="email">
+                    <f:validateRegex pattern=".+@.+\.[a-z]+" />
+                </p:inputText>
+                <p:message for="email" />
+            </p:panelGrid>
+
+            <p:commandButton value="#{msgs.btn_salvar}" action="#{beanAlumnos.salva}"
+                             process="@form"
+                             update="grid messages"/>
+
+            </h:form>
+        <ui:include src="/snippets/pie.xhtml" />
+    </ui:define>
+</ui:composition>

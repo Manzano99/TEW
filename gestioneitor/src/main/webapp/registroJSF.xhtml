@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/template.xhtml">
+
+    <ui:define name="subtitle">Registro JSF</ui:define>
+
+    <ui:define name="cuerpo">
+        <h:form>
+            <p:panel header="Registro JSF/PrimeFaces">
+                <p:panelGrid columns="3">
+
+                    <p:outputLabel value="Nombre de usuario:" for="usuario" />
+                    <p:inputText id="usuario"
+                                 value="#{beanRegistro.nombreUsuario}"
+                                 required="true"
+                                 requiredMessage="El nombre de usuario es obligatorio." />
+                    <p:message for="usuario" />
+
+                    <p:outputLabel value="Contraseña:" for="password" />
+                    <p:password id="password"
+                                value="#{beanRegistro.password}"
+                                required="true"
+                                requiredMessage="La contraseña es obligatoria."
+                                match="confirmar"
+                                validatorMessage="Las contraseñas no coinciden." />
+                    <p:message for="password" />
+
+                    <p:outputLabel value="Confirmar contraseña:" for="confirmar" />
+                    <p:password id="confirmar"
+                                value="#{beanRegistro.confirmarPassword}"
+                                required="true"
+                                requiredMessage="Debe confirmar la contraseña." />
+                    <p:message for="confirmar" />
+
+                </p:panelGrid>
+
+                <p:commandButton value="Registrar"
+                                 action="#{beanRegistro.registrarJSF}"
+                                 ajax="false" />
+
+                <h:outputText value="#{beanRegistro.mensaje}"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!-- This file is not required if you don't need any extra configuration. -->
+<faces-config version="4.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+        https://jakarta.ee/xml/ns/jakartaee
+        https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_4_0.xsd">
+
+   <!-- This descriptor activates the JSF Servlet -->
+
+   <!-- Write your navigation rules here. You are encouraged to use CDI for
+      creating @Named managed beans. -->
+
+   <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>error</from-outcome>
+         <to-view-id>/error.xhtml</to-view-id>
+      </navigation-case>
+   </navigation-rule>
+
+   <navigation-rule>
+    <from-view-id>/formulario.xhtml</from-view-id>
+    <navigation-case>
+        <from-action>#{beanAlumnos.salva}</from-action>
+        <from-outcome>exito</from-outcome>
+        <to-view-id>/listado.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+   </navigation-rule>
+
+   <navigation-rule>
+      <from-view-id>/listado.xhtml</from-view-id>
+      <navigation-case>
+         <from-action>#{beanAlumnos.baja}</from-action>
+         <from-outcome>exito</from-outcome>
+         <to-view-id>/listado.xhtml</to-view-id>
+         <redirect/>
+      </navigation-case>
+      
+      <navigation-case>
+         <from-outcome>editar</from-outcome>
+         <to-view-id>/formulario.xhtml</to-view-id>
+         <redirect/>
+      </navigation-case>
+   </navigation-rule>
+
+   <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>login</from-outcome>
+         <to-view-id>/login.xhtml</to-view-id>
+         <redirect/>
+      </navigation-case>
+   </navigation-rule>
+
+   <navigation-rule>
+      <from-view-id>/login.xhtml</from-view-id>
+      <navigation-case>
+         <from-action>#{beanLogin.login}</from-action>
+         <from-outcome>exito</from-outcome>
+         <to-view-id>/listado.xhtml</to-view-id>
+         <redirect/>
+      </navigation-case>
+   </navigation-rule>
+
+   <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-action>#{beanAlumnos.listado}</from-action>
+         <from-outcome>exito</from-outcome>
+         <if>#{beanLogin.isLogged()}</if>
+         <to-view-id>/listado.xhtml</to-view-id>
+         <else><to-view-id>/login.xhtml</to-view-id></else>
+         <redirect/>
+      </navigation-case>
+      <navigation-case>
+         <from-outcome>alta</from-outcome>
+         <if>#{beanLogin.isLogged()}</if>
+         <to-view-id>/formulario.xhtml</to-view-id>
+         <else><to-view-id>/login.xhtml</to-view-id></else>
+         <redirect/>
+      </navigation-case>
+   </navigation-rule>
+
+   <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>privado</from-outcome>
+            <to-view-id>/restricted/privado.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+   <application>
+      <resource-bundle>
+      <base-name>messages</base-name>
+      <var>msgs</var>
+      </resource-bundle>
+   </application>
+
+</faces-config>
