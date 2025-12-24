@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="subtitle">#{msgs.error_title}</ui:define>
+
+    <ui:define name="cuerpo">
+        <h1 style="color:red;">#{msgs.error_header}</h1>
+
+        <p:panelGrid columns="2" columnClasses="label,value" style="row-gap:8px; column-gap:16px;">
+            <p:outputLabel value="#{msgs.error_view}" />
+            <p:outputLabel value="#{flash['viewId']}" />
+
+            <p:outputLabel value="#{msgs.error_class}" />
+            <p:outputLabel value="#{flash['beanClass']}" />
+
+            <p:outputLabel value="#{msgs.error_method}" />
+            <p:outputLabel value="#{flash['method']}" />
+
+            <p:outputLabel value="#{msgs.error_exception}" />
+            <p:outputLabel value="#{flash['exceptionType']}" />
+
+            <p:outputLabel value="#{msgs.error_message}" />
+            <p:outputLabel value="#{flash['message']}" />
+        </p:panelGrid>
+
+        <h:form>
+            <p:commandLink value="#{msgs.error_back}" action="index.xhtml" />
+        </h:form>
+
+        <ui:include src="/snippets/pie.xhtml" />
+    </ui:define>
+
+</ui:composition>

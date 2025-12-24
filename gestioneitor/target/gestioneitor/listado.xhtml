@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="subtitle">#{msgs.titulo_listado}</ui:define>
+
+    <ui:define name="cuerpo">
+        <h:form>
+            <p:dataTable id="tablaListado" var="alumno" value="#{beanAlumnos.alumnos}" border="1">
+                 <p:column>
+                    <f:facet name="header">#{msgs.label_nombre}</f:facet>
+                    #{alumno.nombre}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">#{msgs.label_apellido}</f:facet>
+                    #{alumno.apellidos}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">#{msgs.label_idUser}</f:facet>
+                    #{alumno.idUser}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">#{msgs.label_email}</f:facet>
+                    #{alumno.email}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">#{msgs.header_baja}</f:facet>
+                    <p:commandLink action="#{beanAlumnos.baja}"
+                                   value="#{msgs.link_baja}"
+                                   update="tablaListado messages">
+                        <f:setPropertyActionListener target="#{beanAlumnos.alumno}" value="#{alumno}" />
+                    </p:commandLink>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">#{msgs.header_editar}</f:facet>
+                    <p:commandLink action="editar" value="#{msgs.link_editar}">
+                        <f:setPropertyActionListener target="#{beanAlumnos.alumno}" value="#{alumno}" />
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+
+            </h:form>
+        <ui:include src="/snippets/pie.xhtml" />
+    </ui:define>
+</ui:composition>
