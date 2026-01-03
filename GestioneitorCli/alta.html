@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Alta de Alumno</title>
+</head>
+<body>
+
+    <header>
+        <h1>Alta de usuario</h1>
+    </header>
+    
+    <main>
+        <section>
+            <form action="">
+                ID Usuario: <input type="text" id="idUser" required> <br/>
+                <br/>
+                Nombre: <input type="text" id="nombre" required> <br/>
+                <br/>
+                Apellidos: <input type="text" id="apellidos" required> <br/>
+                <br/>
+                Email: <input type="email" id="email" required> <br/>
+                <br/>
+                Boton submit: <input type="submit" id="boton" value="Crear Alumno">
+            </form>
+
+            <p id="demo" style="margin-top: 15px;"></p>
+        </section>
+    </main>
+
+    <script>
+        const messageContainer = document.getElementById('demo');
+
+        document.getElementById("boton").addEventListener("click", function(event){
+
+            event.preventDefault(); 
+            const alumno = {
+                idUser: document.getElementById('idUser').value,
+                nombre: document.getElementById('nombre').value,
+                apellidos: document.getElementById('apellidos').value,
+                email: document.getElementById('email').value
+            };
+
+            fetch('http://localhost:8090/gestioneitor/api/alumno', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(alumno)
+            })
+            .then(response => {
+                if (response.ok) {
+                    mostrarMensaje('Alumno creado con exito!', 'green');
+                    document.getElementById('idUser').value = '';
+                    document.getElementById('nombre').value = '';
+                    document.getElementById('apellidos').value = '';
+                    document.getElementById('email').value = '';
+                } else {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error al crear alumno:', error);
+                mostrarMensaje(`Error de conexion: ${error.message}`, 'red');
+            });
+        });
+
+        function mostrarMensaje(mensaje, color) {
+            messageContainer.innerHTML = mensaje;
+            messageContainer.style.color = color;
+        }
+    </script>
+
+</body>
+</html>

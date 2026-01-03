@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <title>Ejemplo sencillo para consumir un servicio web</title>
+        <script type="text/javascript">
+            function solicitarDatosAlumnos() {
+                fetch('http://localhost:8090/gestioneitor/api/alumno')
+                    .then(response => response.json()).catch(err => alert(err))
+                    .then(data => {
+                        cuerpoTabla = document.getElementsByTagName('tbody')[0];
+                        cuerpoTabla.innerHTML = '';
+                        data.forEach(alumno => {
+                            cuerpoTabla.innerHTML += `<tr>
+    <td>${alumno.idUser}</td>
+    <td>${alumno.nombre}</td>
+    <td>${alumno.apellidos}</td>
+    <td>${alumno.email}</td>`
+                        });
+                    });
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Listado de Alumnos</h1>
+        <button onclick="solicitarDatosAlumnos()">Obtener datos</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </body>
+</html>

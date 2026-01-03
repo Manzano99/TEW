@@ -1,0 +1,36 @@
+<section>
+    <h1>Alta de usuario</h1>
+
+    <form id="login" action="#" enctype="application/x-www-form-urlencoded" onsubmit="controller.enviarFormulario(); return false;">
+        
+        <input type="hidden" id="id" name="id">
+        
+        <div class="form-group">
+            <label for="idUser">ID Usuario:</label> 
+            <input type="text" class="form-control" id="idUser" required> 
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label for="nombre">Nombre:</label> 
+            <input type="text" class="form-control" id="nombre" required> 
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label for="apellidos">Apellidos:</label> 
+            <input type="text" class="form-control" id="apellidos" required> 
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label for="email">Email:</label> 
+            <input type="email" class="form-control" id="email" required> 
+        </div>
+        <br>
+        
+        <input type="submit" id="boton" value="Crear Alumno" class="btn btn-primary">
+    </form>
+
+    <p id="demo" style="margin-top: 15px;"></p>
+</section>
