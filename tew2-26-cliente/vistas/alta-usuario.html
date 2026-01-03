@@ -1,0 +1,63 @@
+<section id="alta-usuario">
+    <h2 class="mb-4">Alta Usuarios</h2>
+
+    <div class="card shadow" style="max-width: 600px; margin: 0 auto;">
+        <div class="card-header bg-primary text-white">
+            Nuevo Empleado
+        </div>
+        <div class="card-body">
+            <form id="form-alta-usuario">
+                
+                <div class="mb-3">
+                    <label for="new-dni" class="form-label">DNI</label>
+                    <input type="text" class="form-control" id="new-dni" required maxlength="9" placeholder="Ej: 12345678Z" required>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="new-nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="new-nombre" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="new-apellidos" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="new-apellidos" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="new-rol" class="form-label">Rol en el sistema</label>
+                    <select class="form-select" id="new-rol">
+                        <option value="usuario">Usuario</option>
+                        <option value="tecnico">Técnico</option>
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <button type="button" class="btn btn-secondary me-md-2" onclick="controller.cargarListadoUsuarios()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Dar de Alta</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPassword" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">¡Usuario Creado con Éxito!</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <p>El sistema ha generado la siguiente contraseña:</p>
+                    <h2 class="display-6 fw-bold text-primary" id="generated-pass-display">UNKNOWN</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="controller.cerrarModalPassword()">Entendido, ir al listado</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4 mb-3">
+        <button class="btn btn-secondary" onclick="controller.cargarVistaHome()">Volver a inicio</button>
+    </div>
+</section>

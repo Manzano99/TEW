@@ -1,0 +1,54 @@
+<section id="panel-estadisticas">
+    <h2 class="mb-4">Panel de Estadísticas</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card text-white bg-info mb-3 h-100">
+                <div class="card-header">Tiempo Medio de Resolución</div>
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <h1 class="display-4 fw-bold" id="stat-tiempo">0</h1>
+                    <p class="card-text">horas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-danger mb-3 h-100">
+                <div class="card-header bg-danger text-white">Incidencia Más Antigua (Sin Resolver)</div>
+                <div class="card-body" id="stat-antigua-body">
+                    <h5 class="card-title" id="antigua-titulo">Cargando...</h5>
+                    <p class="card-text">
+                        <strong>ID:</strong> <span id="antigua-id">-</span><br>
+                        <strong>Fecha:</strong> <span id="antigua-fecha">-</span>
+                    </p>
+                    <div id="antigua-btn-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header">Incidencias por Estado</div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush" id="lista-estados">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header">Incidencias por Categoría</div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush" id="lista-categorias">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4 mb-3">
+        <button class="btn btn-secondary" onclick="controller.cargarVistaHome()">Volver a inicio</button>
+    </div>
+</section>

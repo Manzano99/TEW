@@ -1,0 +1,42 @@
+<section id="gestion-usuarios">
+    <h2 class="mb-4">Listado de usuarios</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="cursor:pointer" onclick="controller.ordenarUsuarios('dni')">
+                                DNI <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                            </th>
+                            
+                            <th style="cursor:pointer" onclick="controller.ordenarUsuarios('nombre')">
+                                Nombre <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                            </th>
+                            
+                            <th style="cursor:pointer" onclick="controller.ordenarUsuarios('apellidos')">
+                                Apellidos <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                            </th>
+                            
+                            <th style="cursor:pointer" onclick="controller.ordenarUsuarios('nombreCompleto')">
+                                Nombre Completo <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                            </th> 
+                            
+                            <th style="cursor:pointer" onclick="controller.ordenarUsuarios('rol')">
+                                Rol <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-usuarios-body">
+                        </tbody>
+                </table>
+            </div>
+            
+            <p id="msg-no-usuarios" class="text-center text-muted d-none mt-3">No hay usuarios registrados.</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4 mb-3">
+        <button class="btn btn-secondary" onclick="controller.cargarVistaHome()">Volver a inicio</button>
+    </div>
+</section>

@@ -1,0 +1,75 @@
+<section id="listado-incidencias">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Mis Incidencias</h2>
+      </div>
+
+    <div id="panel-filtros-admin" class="card mb-3 d-none bg-light">
+        <div class="card-body">
+            <h5 class="card-title"><i class="bi bi-funnel"></i> Filtros de administrador</h5>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="filtro-estado" class="form-label">Estado</label>
+                    <select id="filtro-estado" class="form-select" onchange="controller.aplicarFiltros()">
+                        <option value="">Todos los estados</option>
+                        <option value="Abierta">Abierta</option>
+                        <option value="En progreso">En progreso</option>
+                        <option value="Pendiente de usuario">Pendiente de usuario</option>
+                        <option value="Cerrada">Cerrada</option>
+                    </select>
+                </div>
+
+                <div class="col-md-5">
+                    <label for="filtro-empleado" class="form-label">Empleado (DNI o Nombre)</label>
+                    <input type="text" id="filtro-empleado" class="form-control" 
+                           placeholder="Escribe para buscar..." onkeyup="controller.aplicarFiltros()">
+                </div>
+
+                <div class="col-md-3 d-flex align-items-end">
+                    <button class="btn btn-outline-secondary w-100" onclick="controller.limpiarFiltros()">
+                        <i class="bi bi-x-circle"></i> Limpiar Filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-hover shadow-sm">
+          <thead class="table-dark">
+              <tr>
+                  <th style="cursor:pointer" onclick="controller.ordenarIncidencias('id')">
+                      ID <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                  </th>
+                  
+                  <th style="cursor:pointer" onclick="controller.ordenarIncidencias('titulo')">
+                      Título <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                  </th>
+                  
+                  <th style="cursor:pointer" onclick="controller.ordenarIncidencias('fechaCreacionFormateada')">
+                      Fecha Creación <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                  </th>
+
+                  <th id="th-fecha-mod" class="d-none">
+                      Fecha Última Mod.
+                  </th>
+                  
+                  <th style="cursor:pointer" onclick="controller.ordenarIncidencias('estadoActual')">
+                      Estado <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                  </th>
+                  
+                  <th style="cursor:pointer" onclick="controller.ordenarIncidencias('categoria')">
+                      Categoría <i class="bi bi-arrow-down-up" style="font-size: 0.8em"></i>
+                  </th>
+                  
+                  <th>Acción</th> </tr>
+          </thead>
+          
+          <tbody id="tabla-incidencias-body">
+              </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4 mb-3">
+        <button class="btn btn-secondary" onclick="controller.cargarVistaHome()">Volver a inicio</button>
+    </div>
+</section>

@@ -1,0 +1,68 @@
+<section id="detalle-incidencia">
+    <div class="row">
+        <div class="col-md-7">
+            <article class="card shadow mb-4">
+                <div class="card-header bg-info text-white d-flex justify-content-between">
+                    <h5 class="m-0" id="det-titulo">Cargando...</h5>
+                    <span id="det-estado" class="badge bg-secondary">...</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Categoría:</strong> <span id="det-cat"></span></p>
+                    <p><strong>Descripción:</strong></p>
+                    <div class="alert alert-light border" id="det-desc"></div>
+                    <hr>
+                    <div class="row text-muted small">
+                        <div class="col">Solicitante: <span id="det-solicitante"></span></div>
+                        <div class="col">Técnico: <span id="det-tecnico"></span></div>
+                    </div>
+
+                    <div id="panel-acciones-tecnico" class="mt-4 pt-3 border-top d-none">
+                        <h6>Cambiar Estado:</h6>
+                        <button class="btn btn-outline-warning btn-estado" data-estado="En progreso">En progreso</button>
+                        <button class="btn btn-outline-info btn-estado" data-estado="Pendiente de usuario">Pendiente</button>
+                        <button class="btn btn-outline-danger btn-estado" data-estado="Cerrada">Cerrar</button>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top">
+                        <h6 class="text-secondary">Historial de Cambios</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover font-small">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Estado Anterior</th>
+                                        <th>Estado Nuevo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historial-body">
+                                </tbody>
+                            </table>
+                        </div>
+                        <p id="historial-vacio" class="text-muted small text-center d-none">No hay cambios registrados.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-md-5">
+            <section class="card shadow">
+                <div class="card-header bg-secondary text-white">Comentarios</div>
+                <div class="card-body bg-light overflow-auto" id="chat-box" style="max-height: 400px;">
+                </div>
+                <div class="card-footer" id="form-comentario-container">
+                    <form onsubmit="event.preventDefault(); controller.enviarComentario();">
+                        <input type="hidden" id="id-incidencia-hidden">
+                        <div class="input-group">
+                            <input type="text" id="txt-comentario" class="form-control" placeholder="Escribe algo..." required>
+                            <button class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4 mb-3">
+        <button class="btn btn-secondary me-2" onclick="controller.cargarVistaListado()">Volver al listado</button>
+        <button class="btn btn-secondary" onclick="controller.cargarVistaHome()">Volver a inicio</button>
+    </div>
+</section>
