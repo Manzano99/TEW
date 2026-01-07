@@ -1,0 +1,116 @@
+<ui:composition template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{incidenciaBean.cargarListado}" />
+        </f:metadata>
+
+        <p:growl id="growlMessages" showDetail="true" globalOnly="true" life="3000" />
+
+        <h:form id="formListadoIncidencias">
+            <p:panel header="#{msg['listIncidents.panelHeader']}">
+
+                <p:panelGrid columns="5" cellpadding="5" style="margin-bottom: 15px;"
+                             rendered="#{usuarioBean.usuarioActual.rol eq 'administrador'}"
+                             layout="tabular">
+
+                    <p:outputLabel for="fEmpleado" value="#{msg['listIncidents.filter.byEmployee']}" />
+                    <p:inputText id="fEmpleado" value="#{incidenciaBean.filtroEmpleado}" size="10" />
+
+                    <p:outputLabel for="fEstado" value="#{msg['listIncidents.filter.byState']}" />
+                    <p:selectOneMenu id="fEstado" value="#{incidenciaBean.filtroEstado}">
+                        <f:selectItem itemLabel="#{msg['listIncidents.filter.all']}" itemValue="" />
+                        <f:selectItem itemLabel="#{msg['listIncidents.filter.open']}" itemValue="Abierta" />
+                        <f:selectItem itemLabel="#{msg['listIncidents.filter.inProgress']}" itemValue="En progreso" />
+                        <f:selectItem itemLabel="#{msg['listIncidents.filter.pendingUser']}" itemValue="Pendiente de usuario" />
+                        <f:selectItem itemLabel="#{msg['listIncidents.filter.closed']}" itemValue="Cerrada" />
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="#{msg['listIncidents.filter.apply']}" 
+                                     action="#{incidenciaBean.filtrar}"
+                                     process="@form"
+                                     update="tablaIncidencias" />
+                </p:panelGrid>
+
+
+                <p:dataTable id="tablaIncidencias" value="#{incidenciaBean.incidencias}" var="i"
+                             rows="10"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15"
+                             emptyMessage="#{msg['listIncidents.table.empty']}"
+                             style="margin-top:10px; width:100%;">
+
+                    <p:column headerText="#{msg['listIncidents.table.title']}" sortBy="#{i.titulo}">
+                        <h:outputText value="#{i.titulo}" />
+                    </p:column>
+
+                    <p:column headerText="#{msg['listIncidents.table.createdDate']}" sortBy="#{i.fechaCreacion}">
+                        <h:outputText value="#{i.fechaCreacion}">
+                            <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msg['listIncidents.table.modifiedDate']}"
+                              sortBy="#{i.fechaUltimaModificacion}"
+                              rendered="#{usuarioBean.usuarioActual.rol eq 'administrador'}">
+                        <h:outputText value="#{i.fechaUltimaModificacion}">
+                            <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msg['listIncidents.table.category']}" sortBy="#{i.categoria}">
+                        <h:outputText value="#{
+                            i.categoria eq 'Internet'  ? msg['category.Internet']  :
+                            (i.categoria eq 'Telefonia' ? msg['category.Telefonia'] :
+                            (i.categoria eq 'Ordenador' ? msg['category.Ordenador'] :
+                            i.categoria))
+                        }" />
+                    </p:column>
+
+                    <p:column headerText="#{msg['listIncidents.table.state']}" sortBy="#{i.estadoActual}">
+                        <h:outputText value="#{
+                            i.estadoActual eq 'Abierta' ? msg['status.open'] : 
+                            (i.estadoActual eq 'En progreso' ? msg['status.inProgress'] :
+                            (i.estadoActual eq 'Pendiente de usuario' ? msg['status.pendingUser'] :
+                            (i.estadoActual eq 'Cerrada' ? msg['status.closed'] : i.estadoActual)))
+                        }" />
+                    </p:column>
+
+                    <p:column headerText="#{msg['listIncidents.table.actions']}" 
+                              style="width:120px; text-align:center;">
+
+                        <p:commandButton value="#{msg['listIncidents.table.viewDetail']}"
+                                         action="detalle_incidencia"
+                                         ajax="false">
+                            <f:setPropertyActionListener value="#{i}" 
+                                                         target="#{incidenciaBean.incidenciaSeleccionada}" />
+                        </p:commandButton>
+
+                        <p:commandButton value="#{msg['listIncidents.table.reassign']}"
+                                         action="#{incidenciaBean.irAReasignar(i)}"
+                                         ajax="false"
+                                         icon="pi pi-users"
+                                         styleClass="ui-button-warning"
+                                         rendered="#{usuarioBean.usuarioActual.rol eq 'administrador'}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <br/>
+
+                <p:commandButton value="#{msg['listIncidents.button.back']}" 
+                                 action="#{usuarioBean.volverInicio}" 
+                                 ajax="false" 
+                                 icon="pi pi-arrow-left" 
+                                 styleClass="ui-button-secondary"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,104 @@
+<ui:composition template="/templates/layout.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioBean.verificarAdmin}" />
+            <f:event type="preRenderView" listener="#{incidenciaBean.cargarEstadisticas}" />
+        </f:metadata>
+        
+        <p:growl id="growlMessages" showDetail="true" globalOnly="true" life="3000" />
+        
+        <h:panelGroup rendered="#{incidenciaBean.estadisticasDto != null}">
+            
+            <p:panel header="#{msg['stats.panelHeader']}">
+                
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:panel header="#{msg['stats.byState.header']}">
+                        <p:dataTable var="entry" value="#{incidenciaBean.estadisticasDto.recuentoPorEstado.entrySet()}"
+                                     emptyMessage="#{msg['stats.byState.empty']}">
+                            <p:column headerText="#{msg['stats.byState.stateCol']}">
+                                <h:outputText value="#{entry.key}" />
+                            </p:column>
+                            <p:column headerText="#{msg['stats.byState.countCol']}">
+                                <h:outputText value="#{entry.value}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:panel header="#{msg['stats.byCategory.header']}">
+                        <p:dataTable var="entry" value="#{incidenciaBean.estadisticasDto.recuentoPorCategoria.entrySet()}"
+                                     emptyMessage="#{msg['stats.byCategory.empty']}">
+                            <p:column headerText="#{msg['stats.byCategory.categoryCol']}">
+                                <h:outputText value="#{entry.key}" />
+                            </p:column>
+                            <p:column headerText="#{msg['stats.byState.countCol']}"> 
+                                <h:outputText value="#{entry.value}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </h:panelGrid>
+                
+                <hr style="margin: 20px 0;"/>
+
+                <p:panel header="#{msg['stats.metrics.header']}">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="#{msg['stats.metrics.avgTime']}" style="font-weight: bold;"/>
+                        <h:outputText value="#{incidenciaBean.estadisticasDto.tiempoMedioResolucionHoras}">
+                            <f:convertNumber maxFractionDigits="2" />
+                        </h:outputText>
+                    </h:panelGrid>
+                </p:panel>
+                
+                <br />
+
+                <p:panel header="#{msg['stats.oldest.header']}">
+                    <h:panelGroup rendered="#{incidenciaBean.estadisticasDto.incidenciaMasAntigua != null}">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="#{msg['stats.oldest.id']}" style="font-weight: bold;"/>
+                            <h:outputText value="#{incidenciaBean.estadisticasDto.incidenciaMasAntigua.id}" />
+
+                            <h:outputText value="#{msg['stats.oldest.title']}" style="font-weight: bold;"/>
+                            <h:outputText value="#{incidenciaBean.estadisticasDto.incidenciaMasAntigua.titulo}" />
+                            
+                            <h:outputText value="#{msg['stats.oldest.createdDate']}" style="font-weight: bold;"/>
+                            <h:outputText value="#{incidenciaBean.estadisticasDto.incidenciaMasAntigua.fechaCreacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="localDateTime" />
+                            </h:outputText>
+                            
+                            <h:outputText value="#{msg['stats.oldest.link']}" style="font-weight: bold;"/>
+                            
+                            <h:form>
+                                <p:commandButton value="#{msg['stats.oldest.viewDetail']} (ID: #{incidenciaBean.estadisticasDto.incidenciaMasAntigua.id})" 
+                                                 action="detalle_incidencia" 
+                                                 ajax="false" 
+                                                 icon="pi pi-eye">
+                                    <f:setPropertyActionListener 
+                                        target="#{incidenciaBean.incidenciaSeleccionada}" 
+                                        value="#{incidenciaBean.estadisticasDto.incidenciaMasAntigua}" />
+                                </p:commandButton>
+                            </h:form>
+                            
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    <h:outputText value="#{msg['stats.oldest.empty']}" 
+                                  rendered="#{incidenciaBean.estadisticasDto.incidenciaMasAntigua == null}" />
+                </p:panel>
+
+            </p:panel>
+        
+        </h:panelGroup>
+
+        <br/>
+        <p:button value="#{msg['stats.button.back']}" 
+                  outcome="/admin/home_admin.xhtml" 
+                  icon="pi pi-arrow-left" 
+                  styleClass="ui-button-secondary"/>
+
+    </ui:define>
+</ui:composition>

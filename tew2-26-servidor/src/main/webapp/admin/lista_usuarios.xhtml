@@ -1,0 +1,54 @@
+<ui:composition template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioBean.verificarAdmin}" />
+            <f:event type="preRenderView" listener="#{usuarioBean.cargarUsuarios}" />
+        </f:metadata>
+
+        <p:growl id="growlMessages" showDetail="true" globalOnly="true" life="3000" />
+
+        <p:panel header="#{msg['listUsers.panelHeader']}">
+            
+            <p:dataTable var="u" value="#{usuarioBean.usuarios}" 
+                         rows="10" 
+                         paginator="true" 
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         emptyMessage="No se encontraron usuarios">
+
+                <p:column headerText="#{msg['listUsers.col.dni']}">
+                    <h:outputText value="#{u.dni}" />
+                </p:column>
+                
+                <p:column headerText="#{msg['listUsers.col.name']}">
+                    <h:outputText value="#{u.nombre}" />
+                </p:column>
+                
+                <p:column headerText="#{msg['listUsers.col.surname']}">
+                    <h:outputText value="#{u.apellidos}" />
+                </p:column>
+                
+                <p:column headerText="#{msg['listUsers.col.role']}">
+                    <h:outputText value="#{u.rol}" />
+                </p:column>
+
+            </p:dataTable>
+            
+            <br /> 
+            <p:button value="#{msg['listUsers.button.back']}" 
+                      outcome="/admin/home_admin.xhtml" 
+                      icon="pi pi-arrow-left" 
+                      styleClass="ui-button-secondary"/>
+            
+        </p:panel>
+        
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,85 @@
+<ui:composition template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+
+        <style>
+            .etiqueta-columna {
+                width: 100px;
+                padding-right: 5px;
+                vertical-align: top;
+                text-align: left !important;
+            }
+        </style>
+        
+        <p:growl id="growlMessages" showDetail="true" life="5000" />
+        
+        <h:form id="formCrearUsuario">
+            <p:panel header="#{msg['createUser.panelHeader']}" style="width: 500px; margin: auto;">
+                <p:panelGrid columns="2" styleClass="ui:noborder" columnClasses="etiqueta-columna,">
+
+                    <p:outputLabel for="dni" value="#{msg['createUser.label.dni']}"/>
+                    <p:inputMask id="dni" 
+                                 value="#{usuarioBean.altaDni}" 
+                                 required="true"
+                                 requiredMessage="#{msg['createUser.message.dniRequired']}"
+                                 validatorMessage="#{msg['createUser.message.dniInvalid']}"
+                                 mask="99999999A">
+                        
+                        <f:validateRegex pattern="^\d{8}[A-Z]$" />
+                        
+                    </p:inputMask>
+
+
+                    <p:outputLabel for="nombre" value="#{msg['createUser.label.name']}"/>
+                    <p:inputText id="nombre" value="#{usuarioBean.altaNombre}" required="true"
+                                 requiredMessage="#{msg['createUser.message.nameRequired']}"
+                                 validatorMessage="#{msg['createUser.message.nameInvalid']}">
+                        
+                        <f:validateRegex pattern="^[\p{L}\s]*$" />
+                        
+                        <p:keyFilter regEx="/[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/" />
+                        
+                    </p:inputText>
+
+
+                    <p:outputLabel for="apellidos" value="#{msg['createUser.label.surnames']}"/>
+                    <p:inputText id="apellidos" value="#{usuarioBean.altaApellidos}" required="true"
+                                 requiredMessage="#{msg['createUser.message.surnamesRequired']}"
+                                 validatorMessage="#{msg['createUser.message.surnamesInvalid']}">
+                        
+                        <f:validateRegex pattern="^[\p{L}\s]*$" />
+
+                        <p:keyFilter regEx="/[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/" />
+                        
+                    </p:inputText>
+
+
+                    <p:outputLabel for="rol" value="#{msg['createUser.label.role']}"/>
+                    <p:selectOneRadio id="rol" value="#{usuarioBean.altaRol}" required="true">
+                        <f:selectItem itemLabel="#{msg['createUser.role.user']}" itemValue="usuario" />
+                        <f:selectItem itemLabel="#{msg['createUser.role.technician']}" itemValue="tecnico" />
+                    </p:selectOneRadio>
+
+                </p:panelGrid>
+                
+                <p:outputPanel layout="block" style="text-align: center; margin-top: 20px;">
+                    
+                    <p:button value="#{msg['createUser.button.back']}" outcome="/admin/home_admin.xhtml"
+                              icon="pi pi-arrow-left"
+                              styleClass="ui-button-secondary"/> 
+                              
+                    <p:commandButton value="#{msg['createUser.button.submit']}" action="#{usuarioBean.doAltaUsuario}"
+                                     ajax="false"
+                                     style="margin-left: 10px;"/> 
+                </p:outputPanel>
+                
+            </p:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

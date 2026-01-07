@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="https://jakarta.ee/xml/ns/jakartaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                                  https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_4_0.xsd"
+              version="4.0">
+
+    <application>
+        <resource-bundle>
+            <base-name>i18n.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+    </application>
+
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-outcome>usuario</from-outcome>
+            <to-view-id>/usuario/home_usuario.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>tecnico</from-outcome>
+            <to-view-id>/tecnico/home_tecnico.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admin</from-outcome>
+            <to-view-id>/admin/home_admin.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/common/listar_incidencias.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalle_incidencia</from-outcome>
+            <to-view-id>/common/detalle_incidencia.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>irAReasignar</from-outcome>
+            <to-view-id>/admin/reasignar_tecnico.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/common/detalle_incidencia.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-outcome>irAComentar</from-outcome>
+            <to-view-id>/common/anadir_comentario.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>listar_incidencias</from-outcome>
+            <to-view-id>/common/listar_incidencias.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/common/anadir_comentario.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-outcome>detalleGuardado</from-outcome>
+            <to-view-id>/common/detalle_incidencia.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>detalle_incidencia</from-outcome>
+            <to-view-id>/common/detalle_incidencia.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/admin/estadisticas.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-outcome>detalle_incidencia</from-outcome>
+            <to-view-id>/common/detalle_incidencia.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/admin/reasignar_tecnico.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>listar_incidencias</from-outcome>
+            <to-view-id>/common/listar_incidencias.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>

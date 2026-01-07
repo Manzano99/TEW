@@ -1,0 +1,60 @@
+<ui:composition template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        
+        <style>
+            .etiqueta-columna {
+                width: 100px;
+                padding-right: 5px;
+                vertical-align: top;
+                text-align: left !important;
+            }
+        </style>
+
+        <p:growl id="growlMessages" showDetail="true" life="3000" />
+        
+        <h:form id="formRegistrarIncidencia">
+            <p:panel header="#{msg['registerIncident.panelHeader']}" style="width: 500px; margin: auto;">
+                <p:panelGrid columns="2" styleClass="ui-noborder" columnClasses="etiqueta-columna," style="width: 100%;">
+                    
+                    <p:outputLabel for="titulo" value="#{msg['registerIncident.label.title']}"/>
+                    <p:inputText id="titulo" value="#{incidenciaBean.crearTitulo}" required="true"
+                                 requiredMessage="#{msg['registerIncident.message.titleRequired']}" style="width: 95%;"/>
+
+                    <p:outputLabel for="descripcion" value="#{msg['registerIncident.label.description']}"/>
+                    <p:inputTextarea id="descripcion" value="#{incidenciaBean.crearDescripcion}" required="true"
+                                     requiredMessage="#{msg['registerIncident.message.descriptionRequired']}" rows="5" autoResize="false" style="width: 95%;"/>
+
+                    <p:outputLabel for="categoria" value="#{msg['registerIncident.label.category']}"/>
+                    <p:selectOneMenu id="categoria" value="#{incidenciaBean.crearCategoria}" required="true"
+                                     requiredMessage="#{msg['registerIncident.message.categoryRequired']}">
+                        <f:selectItem itemLabel="#{msg['registerIncident.category.prompt']}" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="#{msg['category.Internet']}" itemValue="Internet"/>
+                        <f:selectItem itemLabel="#{msg['category.Telefonia']}" itemValue="Telefonia"/>
+                        <f:selectItem itemLabel="#{msg['category.Ordenador']}" itemValue="Ordenador"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+
+                <p:outputPanel layout="block" style="text-align: center; margin-top: 20px;">
+                    
+                    <p:commandButton value="#{msg['registerIncident.button.back']}"
+                                     action="#{usuarioBean.volverInicio}"
+                                     ajax="false"
+                                     immediate="true" 
+                                     icon="pi pi-home"
+                                     styleClass="ui-button-secondary"
+                                     style="margin-right: 10px;"/>
+
+                    <p:commandButton value="#{msg['registerIncident.button.submit']}"
+                                     action="#{incidenciaBean.doRegistrar}"
+                                     update="formRegistrarIncidencia growlMessages"/>
+                </p:outputPanel>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

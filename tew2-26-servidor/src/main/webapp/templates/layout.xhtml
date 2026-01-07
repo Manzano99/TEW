@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{settings.locale}">
+
+    <h:head>
+        <meta charset="UTF-8" />
+        <title>#{msg['app.title']}</title>
+        <style>
+            .layout-footer {
+                text-align: center;
+                padding: 15px;
+                font-size: 0.9em;
+            }
+            .ui-menubar .ui-menubar-options {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+        </style>
+    </h:head>
+    
+    <h:body styleClass="ui-body">
+    
+        <h:form id="menuForm">
+            
+            <p:menubar>
+                
+                <p:menuitem value="#{msg['app.title']}" 
+                            action="#{usuarioBean.volverInicio}" 
+                            ajax="false"
+                            icon="pi pi-home" />
+
+                <p:submenu label="#{msg['home.admin.panelHeader']}" icon="pi pi-cog" 
+                           rendered="#{usuarioBean.usuarioActual.rol eq 'administrador'}">
+                    
+                    <p:menuitem value="#{msg['home.admin.button.listUsers']}" 
+                                outcome="/admin/lista_usuarios.xhtml" icon="pi pi-users"/>
+                                
+                    <p:menuitem value="#{msg['home.admin.button.createUser']}" 
+                                outcome="/admin/crear_usuario.xhtml" icon="pi pi-user-plus"/>
+                                
+                    <p:menuitem value="#{msg['home.admin.button.viewAllIncidents']}" 
+                                outcome="/common/listar_incidencias.xhtml" icon="pi pi-list"/>
+                                
+                    <p:menuitem value="#{msg['home.admin.button.viewStats']}" 
+                                outcome="/admin/estadisticas.xhtml" icon="pi pi-chart-bar"/>
+                </p:submenu>
+
+                <p:submenu label="#{msg['home.tecnico.panelHeader']}" icon="pi pi-briefcase" 
+                           rendered="#{usuarioBean.usuarioActual.rol eq 'tecnico'}">
+                           
+                    <p:menuitem value="#{msg['home.link.viewIncidents']}" 
+                                outcome="/common/listar_incidencias.xhtml" icon="pi pi-list"/>
+                </p:submenu>
+
+                <p:submenu label="#{msg['home.panel.title']}" icon="pi pi-user" 
+                           rendered="#{usuarioBean.usuarioActual.rol eq 'usuario'}">
+                           
+                    <p:menuitem value="#{msg['home.link.registerIncident']}" 
+                                outcome="/usuario/registrar_incidencia.xhtml" icon="pi pi-plus"/>
+                                
+                    <p:menuitem value="#{msg['home.link.viewIncidents']}" 
+                                outcome="/common/listar_incidencias.xhtml" icon="pi pi-list"/>
+                </p:submenu>
+
+                <f:facet name="options">
+                    <h:outputText value="Hola, #{usuarioBean.usuarioActual.nombre}" 
+                                  rendered="#{usuarioBean.usuarioActual != null}" 
+                                  style="margin-right:10px; font-weight:bold;"/>
+
+                    <p:menuButton value="#{msg['language.label']}" icon="pi pi-globe" styleClass="ui-button-flat">
+                        <p:menuitem value="#{msg['language.spanish']}" action="#{settings.setSpanish}" process="@this" update="@all" icon="pi pi-flag" />
+                        <p:menuitem value="#{msg['language.english']}" action="#{settings.setEnglish}" process="@this" update="@all" icon="pi pi-globe" />
+                    </p:menuButton>
+    
+                    <p:commandButton value="#{msg['logout.button']}" icon="pi pi-sign-out" 
+                                     action="#{usuarioBean.doLogout}" styleClass="ui-button-danger" ajax="false"/>
+                </f:facet>
+
+            </p:menubar>
+        </h:form>
+    
+        <div style="margin: 30px;">
+            <ui:insert name="content">
+            </ui:insert>
+        </div>
+        
+        <footer class="layout-footer">
+            <p>© 2025 - Sistema de Incidencias (TEW)</p>
+        </footer>
+    
+    </h:body>
+
+</f:view> </html>

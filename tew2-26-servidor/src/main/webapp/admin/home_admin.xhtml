@@ -1,0 +1,45 @@
+<ui:composition template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioBean.verificarAdmin}" />
+        </f:metadata>
+
+        <h:panelGroup layout="block" style="margin-bottom: 20px;">
+            <h1>#{msg['home.welcome']} #{usuarioBean.usuarioActual.nombre} #{usuarioBean.usuarioActual.apellidos}</h1>
+            <h3>#{msg['home.role']} #{usuarioBean.usuarioActual.rol}</h3>
+        </h:panelGroup>
+
+        <p:panel header="#{msg['home.admin.panelHeader']}">
+            <p>#{msg['home.admin.panelDescription']}</p>
+
+            <h:panelGrid columns="3" cellpadding="10">
+                
+                <p:button value="#{msg['home.admin.button.listUsers']}" 
+                          outcome="/admin/lista_usuarios.xhtml" 
+                          icon="pi pi-users"/>
+
+                <p:button value="#{msg['home.admin.button.createUser']}" 
+                          outcome="/admin/crear_usuario.xhtml" 
+                          icon="pi pi-user-plus"/>
+
+                <p:button value="#{msg['home.admin.button.viewAllIncidents']}" 
+                          outcome="/common/listar_incidencias.xhtml" 
+                          icon="pi pi-list"/>
+
+                <p:button value="#{msg['home.admin.button.viewStats']}" 
+                          outcome="/admin/estadisticas.xhtml" 
+                          icon="pi pi-chart-bar"/>
+                          
+            </h:panelGrid>
+
+        </p:panel>
+        
+    </ui:define>
+</ui:composition>

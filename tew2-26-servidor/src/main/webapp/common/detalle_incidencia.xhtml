@@ -1,0 +1,175 @@
+<ui:composition template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+
+        <p:messages id="globalMessages" globalOnly="true" closable="true" />
+    
+        <h:form id="formDetalleIncidencia">
+
+            <p:panel id="panelDetalles" header="#{msg['incidentDetail.panelHeader']}">
+                <h:panelGroup layout="block" style="margin:10px; line-height:1.8;">
+                    <h:outputLabel value="#{msg['incidentDetail.id']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{incidenciaBean.incidenciaSeleccionada.id}" />
+                    <br/><br/>
+                    <h:outputLabel value="#{msg['incidentDetail.title']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{incidenciaBean.incidenciaSeleccionada.titulo}" />
+                    <br/><br/>
+                    <h:outputLabel value="#{msg['incidentDetail.description']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{incidenciaBean.incidenciaSeleccionada.descripcion}" />
+                    <br/><br/>
+                    <h:outputLabel value="#{msg['incidentDetail.category']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{
+                                           incidenciaBean.incidenciaSeleccionada.categoria eq 'Internet'  ? msg['category.Internet']  :
+                                           (incidenciaBean.incidenciaSeleccionada.categoria eq 'Telefonia' ? msg['category.Telefonia'] :
+                                           (incidenciaBean.incidenciaSeleccionada.categoria eq 'Ordenador' ? msg['category.Ordenador'] :
+                                           incidenciaBean.incidenciaSeleccionada.categoria))
+                                       }" />
+                    <br/><br/>
+                    <h:outputLabel value="#{msg['incidentDetail.state']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{
+                                           incidenciaBean.incidenciaSeleccionada.estadoActual eq 'Abierta' ? msg['status.open'] : 
+                                           (incidenciaBean.incidenciaSeleccionada.estadoActual eq 'En progreso' ? msg['status.inProgress'] :
+                                           (incidenciaBean.incidenciaSeleccionada.estadoActual eq 'Pendiente de usuario' ? msg['status.pendingUser'] :
+                                           (incidenciaBean.incidenciaSeleccionada.estadoActual eq 'Cerrada' ? msg['status.closed'] : incidenciaBean.incidenciaSeleccionada.estadoActual)))
+                                       }" />
+                    <br/><br/>
+                    <h:outputLabel value="#{msg['incidentDetail.requester']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{incidenciaBean.incidenciaSeleccionada.solicitante}" />
+                    <br/><br/>
+                    <h:outputLabel value="#{msg['incidentDetail.technician']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{incidenciaBean.incidenciaSeleccionada.tecnico}" />
+                    <br/><br/>
+                    <h:outputLabel value="#{msg['incidentDetail.createdDate']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{incidenciaBean.incidenciaSeleccionada.fechaCreacionFormateada}" />
+                    <br/><br/>
+                    <h:outputLabel value="#{msg['incidentDetail.modifiedDate']}" style="font-weight:bold" />
+                    <br/>
+                    <h:outputText value="#{incidenciaBean.incidenciaSeleccionada.fechaUltimaModificacionFormateada}" />
+                    <br/><br/>
+                </h:panelGroup>
+            </p:panel>
+
+            <p:separator />
+
+            <p:panel header="#{msg['incidentDetail.history.header']}">
+                <p:dataTable id="tablaHistorial" 
+                             value="#{historialEstadoBean.listado}"
+                             var="h" paginator="true" rows="5"
+                             paginatorPosition="bottom"
+                             style="margin-top:10px; width:100%;"
+                             emptyMessage="#{msg['incidentDetail.history.empty']}">
+                    
+                    <p:column headerText="#{msg['incidentDetail.history.date']}">
+                        <h:outputText value="#{h.fechaFormateada}" />
+                    </p:column>
+                    <p:column headerText="#{msg['incidentDetail.history.oldState']}">
+                        <h:outputText value="#{
+                                               h.estadoAnterior eq null ? '' : 
+                                               (h.estadoAnterior eq 'Abierta' ? msg['status.open'] : 
+                                               (h.estadoAnterior eq 'En progreso' ? msg['status.inProgress'] :
+                                               (h.estadoAnterior eq 'Pendiente de usuario' ? msg['status.pendingUser'] :
+                                               (h.estadoAnterior eq 'Cerrada' ? msg['status.closed'] : h.estadoAnterior))))
+                                           }" />
+                    </p:column>
+                    <p:column headerText="#{msg['incidentDetail.history.newState']}">
+                        <h:outputText value="#{
+                                               h.estadoNuevo eq 'Abierta' ? msg['status.open'] : 
+                                               (h.estadoNuevo eq 'En progreso' ? msg['status.inProgress'] :
+                                               (h.estadoNuevo eq 'Pendiente de usuario' ? msg['status.pendingUser'] :
+                                               (h.estadoNuevo eq 'Cerrada' ? msg['status.closed'] : h.estadoNuevo)))
+                                           }" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+
+            <p:separator />
+
+            <p:panel id="panelComentarios" header="#{msg['incidentDetail.comments.header']}">
+                
+                <p:dataTable id="tablaComentarios" 
+                             value="#{incidenciaBean.incidenciaSeleccionada.comentarios}"
+                             var="c" paginator="true" rows="5"
+                             paginatorPosition="bottom"
+                             style="margin-top:10px; width:100%;"
+                             emptyMessage="#{msg['incidentDetail.comments.empty']}">
+                    
+                    <p:column headerText="#{msg['incidentDetail.comments.author']}">
+                        <h:outputText value="#{c.autor}" />
+                    </p:column>
+                    <p:column headerText="#{msg['incidentDetail.comments.date']}">
+                        <h:outputText value="#{c.fechaFormateada}" />
+                    </p:column>
+                    <p:column headerText="#{msg['incidentDetail.comments.message']}">
+                        <h:outputText value="#{c.mensaje}" />
+                    </p:column>
+                </p:dataTable>
+                
+                <br/>
+                
+                <p:commandButton value="#{msg['incidentDetail.button.addComment']}"
+                                 action="#{comentarioBean.irAAnadirComentario}"
+                                 ajax="false"
+                                 icon="pi pi-plus"
+                                 styleClass="ui-button-success"
+                                 rendered="#{comentarioBean.isComentarioAllowed()}" 
+                                 process="@this" /> 
+            </p:panel>
+            
+            <p:separator />
+
+            <p:commandButton value="#{msg['incidentDetail.button.back']}"
+                             action="listar_incidencias"
+                             ajax="false"
+                             icon="pi pi-arrow-left"
+                             styleClass="ui-button-secondary" />
+
+        </h:form>
+
+        <p:separator />
+
+        <h:form id="formCambioEstado">
+        
+            <p:panel id="panelCambioEstado" 
+                     header="#{msg['incidentDetail.changeState.header']}"
+                     rendered="#{usuarioBean.usuarioActual.rol eq 'tecnico' and 
+                                 incidenciaBean.incidenciaSeleccionada.estadoActual ne 'Cerrada'}">
+                
+                <p:panelGrid columns="3" styleClass="ui-noborder">
+                    
+                    <p:outputLabel for="selectEstado" value="#{msg['incidentDetail.changeState.newState']}" />
+                    
+                    <p:selectOneMenu id="selectEstado" 
+                                     value="#{incidenciaBean.nuevoEstadoSeleccionado}"
+                                     required="true"
+                                     requiredMessage="#{msg['incidentDetail.changeState.required']}">
+                                     
+                        <f:selectItem itemLabel="#{msg['incidentDetail.changeState.select']}" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{incidenciaBean.estadosDisponibles}" />
+                    </p:selectOneMenu>
+                    
+                    <p:commandButton value="#{msg['incidentDetail.changeState.button']}"
+                                     action="#{incidenciaBean.cambiarEstado}"
+                                     icon="pi pi-check"
+                                     process="@this selectEstado"
+                                     update=":globalMessages :formDetalleIncidencia:panelDetalles :formDetalleIncidencia:tablaHistorial :formDetalleIncidencia:panelComentarios @form" /> 
+                                     
+                </p:panelGrid>
+            </p:panel>
+        
+        </h:form> 
+
+    </ui:define>
+</ui:composition>
